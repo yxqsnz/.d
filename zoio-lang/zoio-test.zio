@@ -1,0 +1,6 @@
+import io
+var name = ""
+io.Print("Hello unknown type your name: ")
+io.Flush()
+io.ReadLine(name)
+io.Println("Hello $name!")
