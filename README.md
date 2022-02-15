@@ -1,2 +1,2 @@
-# my-useless-projects
+# yxqsnz.d
 [Zoio Lang](zoio-lang/) useless programming language
