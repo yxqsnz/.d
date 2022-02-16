@@ -1,0 +1,15 @@
+[module main] in
+   [let name] input("What is your name? ");
+   [writeln out] "Oh hello {name}";
+   [let lst] [1, 2, 3];
+   [let lst] lst :: [4, 5, 6];
+   [for it in lst]
+     [writeln out] "Element: {it}".
+   [end];
+
+   [rust]
+   {
+ 	println!("Hello, world from rust")
+   }
+   [end];
+[done]
