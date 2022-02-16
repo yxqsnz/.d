@@ -1,0 +1,94 @@
+use crate::login;
+use cursive::{
+    traits::{Boxable, Nameable},
+    views::{Dialog, EditView, LinearLayout, ListView, SelectView, TextView},
+    Cursive,
+};
+use pam;
+use std::{error::Error, fs, io::Write};
+use std::{io::Read, path::Path};
+use std::{os::unix::prelude::CommandExt, process::Command};
+use users::{all_users, get_user_by_name, User};
+
+fn get_users() -> Vec<String> {
+    let iter = unsafe { all_users() };
+    let mut users: Vec<String> = vec![];
+    for user in iter {
+        if let Some(username) = user.name().to_str() {
+            users.push(username.to_string());
+        }
+    }
+    users
+}
+
+fn popup(display: &mut Cursive, text: &str) {
+    display.add_layer(
+        Dialog::new()
+            .title("PopUp")
+            .content(TextView::new(text))
+            .button("Ok", |s: &mut Cursive| {
+                s.pop_layer();
+            }),
+    );
+}
+
+fn load_rdm_init(user: &str) {
+    let user = get_user_by_name(&user).unwrap();
+
+    let error_rde = Command::new("/bin/rde")
+        .uid(user.uid())
+        .gid(user.primary_group_id())
+        .exec();
+
+    if !error_rde.to_string().is_empty() {
+        println!("Error starting Rem's Desktop Environment: {}", error_rde);
+    }
+
+    let error_bash = Command::new("/bin/bash")
+        .uid(user.uid())
+        .gid(user.primary_group_id())
+        .exec();
+}
+
+pub fn init_display_manager_interface() {
+    let mut display = cursive::default();
+    let mut userselectView = SelectView::new();
+    userselectView.set_popup(true);
+
+    for i in get_users().into_iter() {
+        userselectView.add_item(i.clone(), i.clone());
+    }
+
+    display.add_layer(
+        Dialog::new()
+            .title("Login")
+            .content(
+                LinearLayout::horizontal()
+                    .child(userselectView.with_name("user"))
+                    .child(EditView::new().with_name("pass").fixed_width(30)),
+            )
+            .button("Login", |s| {
+                let user = s
+                    .call_on_name("user", |d: &mut SelectView| {
+                        if let Some(username) = d.selection() {
+                            username.as_ref().to_owned().clone()
+                        } else {
+                            "root".to_string()
+                        }
+                    })
+                    .unwrap();
+                let passwd = s
+                    .call_on_name("pass", |d: &mut EditView| d.get_content())
+                    .unwrap()
+                    .as_ref()
+                    .clone()
+                    .to_owned();
+                if let Ok(lg) = login::login::login(user.as_str(), passwd.as_str()) {
+                    load_rdm_init(user.as_str());
+                } else {
+                    popup(s, "Cannot Log in");
+                }
+            }),
+    );
+    display.run();
+}
