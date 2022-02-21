@@ -1,5 +1,0 @@
-In file included from /nix/store/msy4nj4gscw9csc82labx0xvh7vqlfif-glibc-2.33-117-dev/include/assert.h:35,
-                 from /home/yxqsnz/Documents/net_tif/tif_editor/target/debug/build/ncurses-2092217dbc7edf11/out/chtype_size.c:2:
-/nix/store/msy4nj4gscw9csc82labx0xvh7vqlfif-glibc-2.33-117-dev/include/features.h:397:4: warning: #warning _FORTIFY_SOURCE requires compiling with optimization (-O) [-Wcpp]
-  397 | #  warning _FORTIFY_SOURCE requires compiling with optimization (-O)
-      |    ^~~~~~~

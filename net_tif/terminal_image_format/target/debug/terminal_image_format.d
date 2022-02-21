@@ -1,1 +1,0 @@
-/home/yxqsnz/Documents/net_tif/terminal_image_format/target/debug/terminal_image_format: /home/yxqsnz/Documents/net_tif/terminal_image_format/src/color_codes.rs /home/yxqsnz/Documents/net_tif/terminal_image_format/src/file_config.rs /home/yxqsnz/Documents/net_tif/terminal_image_format/src/main.rs
