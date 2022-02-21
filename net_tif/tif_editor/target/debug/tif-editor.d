@@ -1,0 +1,1 @@
+/home/yxqsnz/Documents/net_tif/tif_editor/target/debug/tif-editor: /home/yxqsnz/Documents/net_tif/tif_editor/src/grid.rs /home/yxqsnz/Documents/net_tif/tif_editor/src/main.rs /home/yxqsnz/Documents/net_tif/tif_editor/src/pixel.rs
