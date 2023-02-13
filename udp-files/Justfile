@@ -1,0 +1,9 @@
+buf := "508"
+
+serve src:
+    make serve
+    ./bin/serve {{src}} 127.0.0.1 9234 {{buf}}
+
+client target:
+    make client 
+    ./bin/client {{target}} 127.0.0.1 9234 {{buf}}
